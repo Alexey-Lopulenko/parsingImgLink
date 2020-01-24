@@ -3,7 +3,6 @@
 class parsing
 {
     public $currentUrl;
-    public $parseUrlLimit = 500;
     public $internalLinks = [];
     public $visitedPages = [];
     public $recordedLinks;
@@ -46,7 +45,6 @@ class parsing
             return true;
         }
     }
-
 
 
     /**
@@ -117,26 +115,8 @@ class parsing
     }
 
 
-    /**
-     * @param int $parseUrlLimit
-     */
-    public function setParseUrlLimit($parseUrlLimit)
-    {
-        $this->parseUrlLimit = $parseUrlLimit;
-    }
-
-    /**
-     * @return int
-     */
-    public function getParseUrlLimit()
-    {
-        return $this->parseUrlLimit;
-    }
 
 
-    /**
-     * @return array
-     */
     public function getImageLink()
     {
         $file = "image.csv";
@@ -154,7 +134,7 @@ class parsing
                 if (($info['extension'] == 'jpg') ||
                     ($info['extension'] == 'jpeg') ||
                     ($info['extension'] == 'gif') ||
-                    ($info['extension'] == 'png')){
+                    ($info['extension'] == 'png')) {
                     array_push($imagesLink, $url);
                 }
             }
@@ -208,6 +188,26 @@ class parsing
     public function getVisitedPages()
     {
         return $this->visitedPages;
+    }
+
+    /**
+     * @return bool|string
+     */
+    public function getPathToFile()
+    {
+        $real_path = realpath("image.csv");
+        return $real_path;
+    }
+
+    /**
+     * @return array
+     */
+    public function domainAnalysis()
+    {
+        $domain = $this->getDomain();
+        $result = dns_get_record($domain);
+
+        return $result;
     }
 
 }
